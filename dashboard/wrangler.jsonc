@@ -1,0 +1,13 @@
+// Cloudflare Workers 静态资产部署配置(取自 autoconfig PR #1 的有效部分;
+// 不用 @cloudflare/vite-plugin —— 纯静态资产用不上 Worker 运行时,显式指 dist 即可)。
+// name 必须与控制台里已存在的 Worker 同名,否则会另建一个。
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "notification",
+  "compatibility_date": "2026-06-07",
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
