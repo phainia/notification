@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { loadCsv, pairs } from "../lib/csv";
 import { last } from "../lib/transform";
 
@@ -16,6 +18,8 @@ export interface KpiSpec {
   hint?: string;
 }
 
+/** shadcn dashboard-01 的 KPI 卡范式:Description=标签 / Title=大数字 /
+ *  Action=涨跌 Badge / Footer=注脚。标题与注脚各锁一行截断,同行等高。 */
 export function KpiCard({ spec, onClick }: { spec: KpiSpec; onClick?: () => void }) {
   const [v, setV] = useState<{ date: string; value: number; prev: number | null } | null>(null);
   const [err, setErr] = useState(false);
@@ -35,33 +39,41 @@ export function KpiCard({ spec, onClick }: { spec: KpiSpec; onClick?: () => void
   const delta = v && v.prev !== null ? (v.value - v.prev) * k : null;
   const deltaCls =
     delta === null || spec.goodWhen === undefined
-      ? "text-muted-foreground/60"
+      ? "text-muted-foreground"
       : (delta >= 0) === (spec.goodWhen === "high")
         ? "text-up"
         : "text-down";
 
   return (
-    <button
+    <Card
+      role="button"
+      tabIndex={0}
       onClick={onClick}
-      className="rise text-left rounded-lg border border-border bg-card p-4 hover:border-input transition-colors w-full"
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onClick?.()}
+      title={`${spec.title}${spec.hint ? ` · ${spec.hint}` : ""}`}
+      className="h-full gap-1.5 py-4 cursor-pointer hover:border-input transition-colors"
     >
-      <div className="text-xs text-muted-foreground">{spec.title}</div>
-      <div className="mt-1.5 flex items-baseline gap-2">
-        <span className="num text-2xl font-semibold text-foreground">
+      <CardHeader className="px-4 gap-1">
+        <CardDescription className="text-xs truncate">{spec.title}</CardDescription>
+        <CardTitle className="num text-2xl whitespace-nowrap">
           {err ? "—" : v ? (v.value * k).toFixed(d) : "…"}
           {spec.fmt === "pct" && !err && v ? <span className="text-sm">%</span> : null}
-        </span>
+        </CardTitle>
         {delta !== null && (
-          <span className={`num text-xs ${deltaCls}`}>
-            {delta >= 0 ? "+" : ""}
-            {delta.toFixed(d)}
-          </span>
+          <CardAction>
+            <Badge variant="outline" className={`num ${deltaCls}`}>
+              {delta >= 0 ? "+" : ""}
+              {delta.toFixed(d)}
+            </Badge>
+          </CardAction>
         )}
-      </div>
-      <div className="num text-[10px] text-muted-foreground/60 mt-1">
-        {v?.date ?? ""}
-        {spec.hint ? ` · ${spec.hint}` : ""}
-      </div>
-    </button>
+      </CardHeader>
+      <CardFooter className="px-4">
+        <span className="num text-[10px] text-muted-foreground/60 truncate">
+          {v?.date ?? ""}
+          {spec.hint ? ` · ${spec.hint}` : ""}
+        </span>
+      </CardFooter>
+    </Card>
   );
 }

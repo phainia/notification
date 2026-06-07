@@ -77,4 +77,4 @@ uv run feeds/rates.py          # 任意单个
 - **冻结序列**(日志里日期永不前进,属正常):VXO ..2021-09-23(CBOE 停止发布;它是覆盖 1987 股灾的唯一免费波动率序列,1990 后用 VIX)、putcall ..2019-10(由 putcall_cboe 续)。
 - prices 全量覆写(复权基准随分红回移,不能增量追加);盘中跑会含当日半根 K,收盘后跑最稳。
 
-依赖:`pandas numpy openpyxl xlrd yfinance lxml`(uv 脚本头各自声明,`uv run` 自动装);取数全用 stdlib urllib。外部站点:api.stlouisfed.org、publicreporting.cftc.gov、naaim.org、aaii.com、cdn/www.cboe.com、web.archive.org、westmetall.com、barchart.com、LBMA、production.dataviz.cnn.io。
+依赖:`pandas numpy openpyxl xlrd yfinance lxml curl_cffi`(uv 脚本头各自声明,`uv run` 自动装);取数以 stdlib urllib 为主,**spot_gold 例外用 curl_cffi(Chrome TLS 指纹)** —— LBMA 的 WAF 在数据中心 IP 上按指纹挑客户端(urllib 时而 415、时而 200 错误体)。外部站点:api.stlouisfed.org、publicreporting.cftc.gov、naaim.org、aaii.com、cdn/www.cboe.com、web.archive.org、westmetall.com、barchart.com、LBMA、production.dataviz.cnn.io。

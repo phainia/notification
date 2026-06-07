@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = ["pandas>=2.0", "numpy>=1.26", "openpyxl>=3.1", "xlrd>=2.0",
-#                 "yfinance>=0.2.40", "lxml>=5.0"]
+#                 "yfinance>=0.2.40", "lxml>=5.0", "curl_cffi>=0.7"]
 # ///
 """跑全部 30 个 feed,逐个容错,最后汇总。每天刷新一行 cron 即可(美股收盘后跑):
     uv run /home/river_fan/code/notification/feeds/run_all.py

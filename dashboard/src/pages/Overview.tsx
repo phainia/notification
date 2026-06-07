@@ -61,7 +61,7 @@ function KpiRow({ label, items, onNav }: { label: string; items: Kpi[]; onNav: (
       <div className="text-[11px] tracking-widest text-muted-foreground/60 mb-2 num uppercase">{label}</div>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
         {items.map((k, i) => (
-          <div key={k.title} style={{ animationDelay: `${i * 50}ms` }} className="rise">
+          <div key={k.title} style={{ animationDelay: `${i * 50}ms` }} className="rise h-full">
             <KpiCard spec={k} onClick={() => onNav(k.nav)} />
           </div>
         ))}

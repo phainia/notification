@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["pandas>=2.0", "numpy>=1.26"]
+# dependencies = ["pandas>=2.0", "numpy>=1.26", "curl_cffi>=0.7"]
 # ///
 """现货金 XAU/USD — LBMA 官方免费 JSON(prices.lbma.org.uk,无 key)→ data/XAUUSD.csv。
 
@@ -22,32 +22,33 @@ import os
 
 import pandas as pd
 
-from _common import DATA_DIR, _get
+import time
+
+from curl_cffi import requests as _curl
+
+from _common import DATA_DIR
 
 LBMA = "https://prices.lbma.org.uk/json/gold_{fix}.json"
 OUT = os.path.join(DATA_DIR, "XAUUSD.csv")
-_BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 "
-               "(KHTML, like Gecko) Version/17.0 Safari/605.1.15")
-# 同一官方 URL 的头部阶梯:本机默认头即 200,但 GitHub Actions 等数据中心 IP 会被
-# 边缘网关挑剔地 415(2026-06 实测)——依次换更"像 JSON 客户端/浏览器"的头重试。
-_HEADER_LADDER = [
-    None,                                                  # _common 默认 UA
-    {"User-Agent": _BROWSER_UA, "Accept": "application/json",
-     "Content-Type": "application/json"},
-    {"User-Agent": _BROWSER_UA, "Accept": "application/json, text/plain, */*",
-     "Accept-Language": "en-GB,en;q=0.9", "Accept-Encoding": "gzip",
-     "Referer": "https://www.lbma.org.uk/prices-and-data/precious-metal-prices"},
-]
 
 
-def _fetch_json(url: str):
-    last = None
-    for h in _HEADER_LADDER:
+def _fetch_json(url: str) -> list[dict]:
+    """LBMA 的 WAF 在数据中心 IP 上按 TLS 指纹挑客户端(urllib 时而 415、
+    时而 200 错误体)—— 用 curl_cffi 仿真 Chrome 指纹,一条路不做头部兜底;
+    仅做同客户端的瞬时重试 + 响应形状校验(必须是 [{'d':…,'v':…},…])。"""
+    last: Exception | str | None = None
+    for a in range(3):
         try:
-            return _get(url, retries=2, headers=h).json()
+            r = _curl.get(url, impersonate="chrome", timeout=40)
+            r.raise_for_status()
+            rows = r.json()
+            if isinstance(rows, list) and rows and isinstance(rows[0], dict) and "d" in rows[0]:
+                return rows
+            last = f"HTTP 200 但非价格数组: {str(rows)[:100]}"
         except Exception as e:  # noqa: BLE001
             last = e
-    raise RuntimeError(f"LBMA 全部头部组合失败: {url}\n  last: {str(last)[:150]}")
+        time.sleep(1.5 * (a + 1))
+    raise RuntimeError(f"LBMA 抓取失败: {url}\n  last: {str(last)[:150]}")
 
 
 def _fix_series(fix: str) -> pd.Series:
