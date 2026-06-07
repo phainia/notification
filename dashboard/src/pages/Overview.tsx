@@ -2,14 +2,26 @@ import { KpiCard, type KpiSpec } from "../components/KpiCard";
 import { ChartCard } from "../components/ChartCard";
 import type { ChartSpec } from "../charts/types";
 
-/** 总览:六个温度计 KPI + 两张焦点图(情绪与宽度,最常看的)。 */
-const KPIS: (KpiSpec & { nav: string })[] = [
-  { title: "CNN Fear & Greed", csv: "macro/fng", col: "fng", digits: 0, goodWhen: "high", hint: "≤25 恐慌 / ≥75 贪婪", nav: "sentiment" },
-  { title: "VIX", csv: "macro/credit_spread", col: "vix", goodWhen: "low", hint: ">30 高波动", nav: "rates" },
-  { title: "标普500 > MA200 占比", csv: "macro/breadth_official", col: "pct_above_ma200", fmt: "pct", digits: 1, goodWhen: "high", hint: "≤15 washout / ≥85 过热", nav: "breadth" },
-  { title: "股票 Put/Call(5日趋势看图)", csv: "macro/putcall_cboe", col: "equity_pc", goodWhen: "low", hint: ">1 恐慌 / <0.5 自满", nav: "sentiment" },
-  { title: "高收益债 OAS", csv: "macro/credit_spread", col: "hy_oas_full", fmt: "pct", goodWhen: "low", hint: ">6% 信用承压", nav: "rates" },
-  { title: "期限利差 10Y−2Y", csv: "macro/rates", col: "curve_10y_2y", fmt: "pct", goodWhen: "high", hint: "<0 倒挂", nav: "rates" },
+type Kpi = KpiSpec & { nav: string };
+
+/** 市场温度:情绪/波动/宽度/信用 —— 点击直达对应图表并高亮 */
+const MARKET: Kpi[] = [
+  { title: "CNN Fear & Greed", csv: "macro/fng", col: "fng", digits: 0, goodWhen: "high", hint: "≤25 恐慌 / ≥75 贪婪", nav: "sentiment/fng" },
+  { title: "VIX", csv: "VIX", col: "c", goodWhen: "low", hint: ">30 高波动", nav: "rates/credit" },
+  { title: "标普500 > MA200 占比", csv: "macro/breadth_official", col: "pct_above_ma200", fmt: "pct", digits: 1, goodWhen: "high", hint: "≤15 washout / ≥85 过热", nav: "breadth/sp500-breadth" },
+  { title: "股票 Put/Call", csv: "macro/putcall_cboe", col: "equity_pc", goodWhen: "low", hint: ">1 恐慌 / <0.5 自满", nav: "sentiment/putcall" },
+  { title: "高收益债 OAS", csv: "macro/credit_spread", col: "hy_oas_full", fmt: "pct", goodWhen: "low", hint: ">6% 信用承压", nav: "rates/credit" },
+  { title: "期限利差 10Y−2Y", csv: "macro/rates", col: "curve_10y_2y", fmt: "pct", goodWhen: "high", hint: "<0 倒挂", nav: "rates/rates-policy" },
+];
+
+/** 宏观速览:就业/制造/仓位/商品比价 */
+const MACRO: Kpi[] = [
+  { title: "失业率", csv: "macro/jobs_monthly", col: "unemployment_rate_pct", fmt: "pct", digits: 1, goodWhen: "low", nav: "consumption/jobs" },
+  { title: "初请失业金", csv: "macro/claims_weekly", col: "initial_claims_weekly", scale: 0.001, digits: 0, goodWhen: "low", hint: "千人/周", nav: "consumption/jobs" },
+  { title: "ISM 制造业 PMI", csv: "macro/ism_pmi", col: "ism_pmi", digits: 1, goodWhen: "high", hint: "50 荣枯线", nav: "supply/mfg-orders" },
+  { title: "NAAIM 经理人仓位", csv: "macro/naaim", col: "naaim_mean", digits: 0, hint: "0-200%,≤20 防御 / ≥90 拥挤", nav: "sentiment/naaim" },
+  { title: "AAII 多空差", csv: "macro/aaii", col: "bull_bear_spread", digits: 1, goodWhen: "high", hint: "百分点,≤−20 极端看空", nav: "sentiment/aaii" },
+  { title: "铜金比(日)", csv: "macro/copper_gold_ppi", col: "copper_gold_ratio_daily", digits: 2, goodWhen: "high", hint: "升=再通胀 risk-on", nav: "inflation/copper-gold" },
 ];
 
 const FOCUS: ChartSpec[] = [
@@ -43,19 +55,31 @@ const FOCUS: ChartSpec[] = [
   },
 ];
 
-export function Overview({ onNav }: { onNav: (id: string) => void }) {
+function KpiRow({ label, items, onNav }: { label: string; items: Kpi[]; onNav: (p: string) => void }) {
   return (
-    <div className="max-w-[1800px] space-y-4">
+    <div>
+      <div className="text-[11px] tracking-widest text-muted-foreground/60 mb-2 num uppercase">{label}</div>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
-        {KPIS.map((k, i) => (
+        {items.map((k, i) => (
           <div key={k.title} style={{ animationDelay: `${i * 50}ms` }} className="rise">
             <KpiCard spec={k} onClick={() => onNav(k.nav)} />
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+export function Overview({ onNav }: { onNav: (path: string) => void }) {
+  return (
+    <div className="max-w-[1800px] space-y-5">
+      <KpiRow label="市场温度" items={MARKET} onNav={onNav} />
+      <KpiRow label="宏观速览" items={MACRO} onNav={onNav} />
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {FOCUS.map((c) => (
-          <ChartCard key={c.id} spec={c} />
+          <div key={c.id} className="h-[440px]">
+            <ChartCard spec={c} />
+          </div>
         ))}
       </div>
     </div>

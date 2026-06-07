@@ -38,7 +38,7 @@ export const sentiment: GroupSpec = {
       y0: { name: "百分点" },
       hLines: [
         { value: 0 },
-        { value: -20, label: "极端看空 −20" },
+        { value: -20, label: "极端 −20" },
       ],
       note: "AAII 官方周度调查,1987+,单位为百分点(看多% − 看空%);低于 −20 为极端看空区(全史仅 8% 的周触及,2009-03 大底 = −51)。",
       defaultYears: 10,

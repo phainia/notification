@@ -11,6 +11,9 @@
 2019-10 处标注"统计系统切换"。
 
 累积缓存:已检查过的日期(含假日 NaN 标记行)不再重抓;每日 cron 只新增 1-3 个请求。
+例外:最近 7 个日历日内的全 NaN 行会重查 —— 若 cron 跑在 CBOE 当日页面发布之前,
+当天会被误标成"假日"(实测 2026-06-05 大跌日被打洞),重查窗口让它次日自愈;
+真假日只是多花 1-2 个请求重新拿到 NaN,无害。
 首跑回填 2019-10-07 至今 ~1670 个交易日(每页 ~400KB、礼貌间隔,约 15-30 分钟),
 每 100 天落盘一次,中断可续。"""
 import os
@@ -55,6 +58,11 @@ def main():
     old = (pd.read_csv(path, index_col=0, parse_dates=True)
            if os.path.exists(path) else pd.DataFrame(columns=COLS))
     have = set(old.index)
+    # 近 7 日内的全 NaN 标记行重查(可能是"发布前误标",而非真假日)
+    if len(old):
+        recent_nan = old[old.isna().all(axis=1)
+                         & (old.index >= pd.Timestamp.today().normalize() - pd.Timedelta(days=7))].index
+        have -= set(recent_nan)
     todo = [d for d in pd.bdate_range(START, pd.Timestamp.today().normalize())
             if d not in have]
 

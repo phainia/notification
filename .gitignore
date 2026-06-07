@@ -6,3 +6,4 @@ research/
 feeds/UPGRADE_PLAN.md
 node_modules/
 dashboard/dist/
+*.tsbuildinfo

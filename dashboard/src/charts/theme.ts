@@ -46,7 +46,8 @@ export function baseOption() {
   return {
     backgroundColor: "transparent",
     textStyle: { fontFamily: "IBM Plex Mono, IBM Plex Sans, monospace" },
-    grid: { left: 8, right: 8, top: 38, bottom: 44, containLabel: true },
+    // top 给两层空间:图例一行(~16px)+ y 轴名一行,避免轴名压在图例上
+    grid: { left: 8, right: 8, top: 56, bottom: 44, containLabel: true },
     legend: {
       top: 0,
       left: 0,
@@ -103,7 +104,8 @@ export function yAxis(opts: { name?: string; fmt?: "pct" | "num"; min?: number |
   return {
     type: "value" as const,
     name: opts.name,
-    nameTextStyle: { color: INK2, fontSize: 10, align: opts.position === "left" ? ("left" as const) : ("right" as const) },
+    nameGap: 10,
+    nameTextStyle: { color: "#575652", fontSize: 10, align: opts.position === "left" ? ("left" as const) : ("right" as const) },
     position: opts.position,
     min: opts.min,
     max: opts.max,

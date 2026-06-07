@@ -1,4 +1,4 @@
-import { Activity, Banknote, Factory, Flame, Gauge, LayoutGrid, Percent, X } from "lucide-react";
+import { Activity, Banknote, Factory, Flame, Gauge, Github, LayoutGrid, Percent, X } from "lucide-react";
 import type { GroupSpec } from "../charts/types";
 
 const ICONS: Record<string, typeof Activity> = {
@@ -30,10 +30,10 @@ export function Sidebar({
       {/* 移动端遮罩 */}
       {open && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={onClose} />}
       <aside
-        className={`fixed md:static z-40 h-full w-60 shrink-0 border-r border-line bg-bg flex flex-col
+        className={`fixed md:static z-40 h-full w-60 shrink-0 border-r border-border bg-background flex flex-col
                     transition-transform md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="flex items-center justify-between px-5 h-14 border-b border-line">
+        <div className="flex items-center justify-between px-5 h-14 border-b border-border">
           <div className="flex items-center gap-2.5">
             <svg viewBox="0 0 32 32" className="w-6 h-6 rounded" aria-hidden>
               <rect width="32" height="32" rx="6" fill="#131316" />
@@ -41,10 +41,19 @@ export function Sidebar({
             </svg>
             <div className="leading-none">
               <div className="font-semibold text-[15px] tracking-tight">Macro Terminal</div>
-              <div className="num text-[10px] text-ink-3 mt-1">riverfjs/notification</div>
+              <a
+                href="https://github.com/riverfjs/notification"
+                target="_blank"
+                rel="noreferrer"
+                className="num inline-flex items-center gap-1 text-[10px] text-muted-foreground/60 mt-1 hover:text-primary transition-colors"
+                title="打开 GitHub 仓库"
+              >
+                <Github size={10} />
+                riverfjs/notification
+              </a>
             </div>
           </div>
-          <button className="md:hidden text-ink-3 hover:text-ink" onClick={onClose} aria-label="关闭菜单">
+          <button className="md:hidden text-muted-foreground/60 hover:text-foreground" onClick={onClose} aria-label="关闭菜单">
             <X size={18} />
           </button>
         </div>
@@ -57,7 +66,7 @@ export function Sidebar({
                 key={it.id}
                 onClick={() => onNav(it.id)}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-[13px] transition-colors text-left
-                  ${is ? "bg-amber/10 text-amber" : "text-ink-2 hover:bg-panel-2 hover:text-ink"}`}
+                  ${is ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"}`}
               >
                 <Icon size={15} strokeWidth={is ? 2.2 : 1.8} />
                 {it.title}
@@ -65,7 +74,7 @@ export function Sidebar({
             );
           })}
         </nav>
-        <div className="px-5 py-3 border-t border-line text-[10px] leading-relaxed text-ink-3">
+        <div className="px-5 py-3 border-t border-border text-[10px] leading-relaxed text-muted-foreground/60">
           数据:官方免费源,GitHub Actions 每个交易日收盘后自动更新。
         </div>
       </aside>

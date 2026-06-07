@@ -10,7 +10,7 @@
 uv run feeds/run_all.py        # 全部 30 个,按依赖排序(prices/spot_gold/spot_copper 在前)
 uv run feeds/rates.py          # 任意单个
 ```
-- **云端为主**:`.github/workflows/feeds.yml` 工作日 UTC 22:30(美东收盘后)自动跑并把
+- **云端为主**:`.github/workflows/feeds.yml` UTC 周二~六 02:30(= 美东周一~五晚 21:30/22:30,等 CBOE/FRED 当日发布完毕)自动跑并把
   更新的 CSV 提交回仓库;push 改动 `feeds/**` 代码(`.md` 除外)也会触发一轮验证。
   任一模块失败任务标红(`run_all.py` 非零退出),成功模块的数据照常提交。
   本地只 `git pull`,不要再开本地 cron(会互相产生提交冲突)。

@@ -1,4 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Layers, Maximize2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import type { ChartSpec, SeriesSpec } from "../charts/types";
 import { baseOption, echarts, INK2, PALETTE, yAxis } from "../charts/theme";
 import { loadCsv, pairs } from "../lib/csv";
@@ -22,7 +27,46 @@ async function seriesData(s: SeriesSpec): Promise<Pair[]> {
   return d;
 }
 
-export function ChartCard({ spec }: { spec: ChartSpec }) {
+/** 对比视图的缩放联动:按【日期】对齐(echarts.connect 是按百分比,两图历史长度
+ *  不同会错位)。同组任一图缩放 → 把它的 startValue/endValue 原样派发给其余图。 */
+const syncGroups = new Map<string, Set<echarts.ECharts>>();
+let syncing = false;
+
+function joinSync(group: string, chart: echarts.ECharts) {
+  let set = syncGroups.get(group);
+  if (!set) syncGroups.set(group, (set = new Set()));
+  set.add(chart);
+  chart.on("dataZoom", () => {
+    if (syncing) return;
+    const dz = (chart.getOption() as { dataZoom?: { startValue?: number; endValue?: number }[] }).dataZoom?.[0];
+    if (!dz || dz.startValue === undefined) return;
+    syncing = true;
+    try {
+      for (const other of set!) {
+        if (other !== chart && !other.isDisposed()) {
+          other.dispatchAction({ type: "dataZoom", startValue: dz.startValue, endValue: dz.endValue });
+        }
+      }
+    } finally {
+      syncing = false;
+    }
+  });
+}
+
+export function ChartCard({
+  spec,
+  syncGroup,
+  onFullscreen,
+  compared,
+  onCompare,
+}: {
+  spec: ChartSpec;
+  /** 对比视图传同一个组名 → 缩放跨图按日期联动 */
+  syncGroup?: string;
+  onFullscreen?: () => void;
+  compared?: boolean;
+  onCompare?: () => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<echarts.ECharts | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
@@ -39,6 +83,7 @@ export function ChartCard({ spec }: { spec: ChartSpec }) {
         if (dead || !ref.current) return;
         const chart = echarts.init(ref.current);
         chartRef.current = chart;
+        if (syncGroup) joinSync(syncGroup, chart);
 
         const first = data[0];
         if (first.length) setLatest({ date: first[first.length - 1][0], value: first[first.length - 1][1] });
@@ -71,7 +116,11 @@ export function ChartCard({ spec }: { spec: ChartSpec }) {
                     lineStyle: { color: "#575652", type: "dashed", width: 1 },
                     data: [
                       ...(spec.hLines ?? []).map((h) => ({ yAxis: h.value, label: { formatter: h.label ?? String(h.value) } })),
-                      ...(spec.vLines ?? []).map((v) => ({ xAxis: v.date, label: { formatter: v.label ?? v.date } })),
+                      // 垂直参考线的标签沿线旋转,避免窄空间里汉字被逐字竖排挤压
+                      ...(spec.vLines ?? []).map((v) => ({
+                        xAxis: v.date,
+                        label: { formatter: v.label ?? v.date, rotate: 90, position: "insideEndTop" as const, distance: 6 },
+                      })),
                     ],
                   }
                 : undefined,
@@ -95,10 +144,11 @@ export function ChartCard({ spec }: { spec: ChartSpec }) {
     return () => {
       dead = true;
       window.removeEventListener("resize", onResize);
+      if (syncGroup && chartRef.current) syncGroups.get(syncGroup)?.delete(chartRef.current);
       chartRef.current?.dispose();
       chartRef.current = null;
     };
-  }, [spec]);
+  }, [spec, syncGroup]);
 
   // 区间切换
   useEffect(() => {
@@ -121,44 +171,74 @@ export function ChartCard({ spec }: { spec: ChartSpec }) {
   }, [latest, spec]);
 
   return (
-    <div className="rise rounded-lg border border-line bg-panel p-4 hover:border-line-2 transition-colors">
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <div className="min-w-0">
-          <h3 className="text-[15px] font-semibold tracking-tight">{spec.title}</h3>
-          {spec.subtitle && <p className="text-xs text-ink-2 mt-0.5 truncate">{spec.subtitle}</p>}
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
+    <Card className="h-full gap-2 py-4 hover:border-input transition-colors">
+      <CardHeader className="px-4 gap-0.5">
+        <CardTitle className="text-[15px] truncate">{spec.title}</CardTitle>
+        <CardDescription className="text-xs truncate">{spec.subtitle ?? " "}</CardDescription>
+        <CardAction className="flex items-center gap-2 flex-wrap justify-end">
           {latest && (
-            <span className="num text-xs px-2 py-1 rounded bg-panel-2 border border-line text-amber" title={`首列系列最新值 · ${latest.date}`}>
+            <Badge variant="outline" className="num text-primary hidden sm:inline-flex" title={`首列系列最新值 · ${latest.date}`}>
               {latestText}
-              <span className="text-ink-3 ml-1.5">{latest.date.slice(2)}</span>
-            </span>
+              <span className="text-muted-foreground/60">{latest.date.slice(2)}</span>
+            </Badge>
           )}
-          <div className="flex rounded border border-line overflow-hidden">
+          <div className="flex rounded-md border overflow-hidden">
             {RANGES.map((r) => (
               <button
                 key={r.label}
                 onClick={() => setRange(r.years)}
                 className={`num px-2 py-1 text-[11px] transition-colors ${
-                  range === r.years ? "bg-amber/15 text-amber" : "text-ink-3 hover:text-ink-2"
+                  range === r.years ? "bg-primary/15 text-primary" : "text-muted-foreground/60 hover:text-muted-foreground"
                 }`}
               >
                 {r.label}
               </button>
             ))}
           </div>
+          {onCompare && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={compared ? "default" : "outline"}
+                  size="icon"
+                  className="size-7"
+                  onClick={onCompare}
+                  aria-label={compared ? "移出对比" : "加入对比"}
+                >
+                  <Layers className="size-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{compared ? "移出对比" : "加入对比"}</TooltipContent>
+            </Tooltip>
+          )}
+          {onFullscreen && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon" className="size-7" onClick={onFullscreen} aria-label="全屏查看">
+                  <Maximize2 className="size-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>全屏查看</TooltipContent>
+            </Tooltip>
+          )}
+        </CardAction>
+      </CardHeader>
+      <CardContent className="px-4 flex-1 min-h-0">
+        <div className="relative h-full">
+          <div ref={ref} className="absolute inset-0" />
+          {state === "loading" && (
+            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/60 text-sm num animate-pulse">loading…</div>
+          )}
+          {state === "error" && (
+            <div className="absolute inset-0 flex items-center justify-center text-down text-xs px-6 text-center">{err}</div>
+          )}
         </div>
-      </div>
-      <div className="relative h-[340px]">
-        <div ref={ref} className="absolute inset-0" />
-        {state === "loading" && (
-          <div className="absolute inset-0 flex items-center justify-center text-ink-3 text-sm num animate-pulse">loading…</div>
-        )}
-        {state === "error" && (
-          <div className="absolute inset-0 flex items-center justify-center text-down text-xs px-6 text-center">{err}</div>
-        )}
-      </div>
-      {spec.note && <p className="text-[11px] leading-relaxed text-ink-3 mt-2 border-t border-line pt-2">{spec.note}</p>}
-    </div>
+      </CardContent>
+      <CardFooter className="px-4">
+        <p className="text-[11px] leading-snug text-muted-foreground/60 border-t pt-1.5 line-clamp-2 min-h-[2.1em] w-full" title={spec.note}>
+          {spec.note ?? ""}
+        </p>
+      </CardFooter>
+    </Card>
   );
 }

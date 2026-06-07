@@ -5,7 +5,8 @@ name: feeds-daily
 
 on:
   schedule:
-    - cron: "30 22 * * 1-5"   # UTC 22:30 = 美东 17:30(夏令时)/18:30(冬令时),收盘后
+    - cron: "30 2 * * 2-6"    # UTC 周二~六 02:30 = 美东周一~五 22:30(夏)/21:30(冬):
+                              # 给 CBOE 统计页/FRED 日频留足发布时间(18:30 ET 抓会打洞)
   workflow_dispatch:
   push:
     paths:                    # feeds 代码变更即自动跑一轮验证(Actions 的数据提交只
