@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+/* ── Macro Terminal 设计令牌:石墨黑(shadcn neutral 暗色同族)+ 琥珀信号 ── */
+@theme {
+  --color-bg: #0c0c0e;          /* 全局底:近黑微暖 */
+  --color-panel: #131316;       /* 卡片面板 */
+  --color-panel-2: #18181c;     /* 悬停面板 */
+  --color-line: #232329;        /* 细边框 */
+  --color-line-2: #2e2e36;      /* 强边框 */
+  --color-ink: #e8e6e1;         /* 主文字:暖白 */
+  --color-ink-2: #8b8a85;       /* 次文字 */
+  --color-ink-3: #575652;       /* 弱文字 */
+  --color-amber: #f5a524;       /* 信号琥珀 */
+  --color-amber-2: #ffc95e;
+  --color-up: #2dd4a7;          /* 涨/宽松 */
+  --color-down: #fb4d6d;        /* 跌/收紧 */
+  --font-sans: "IBM Plex Sans", "Noto Sans SC", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 背景氛围:极弱网格 + 顶部琥珀辉光,终端深度感 */
+.terminal-bg {
+  background-image:
+    radial-gradient(1200px 400px at 70% -10%, rgba(245, 165, 36, 0.05), transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: auto, 44px 44px, 44px 44px;
+}
+
+/* 数字一律等宽:行情的仪式感 */
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* 滚动条贴合暗色 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #2a2a31; border-radius: 5px; border: 2px solid var(--color-bg); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* 页面载入:卡片错峰浮现 */
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }

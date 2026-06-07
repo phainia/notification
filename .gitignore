@@ -4,3 +4,5 @@ __pycache__/
 .claude/
 research/
 feeds/UPGRADE_PLAN.md
+node_modules/
+dashboard/dist/
