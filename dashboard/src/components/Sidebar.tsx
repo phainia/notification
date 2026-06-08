@@ -1,4 +1,4 @@
-import { Activity, Banknote, Factory, Flame, Gauge, Github, LayoutGrid, Percent } from "lucide-react";
+import { Activity, Banknote, Factory, Flame, Gauge, Github, LayoutGrid, Percent, TrendingUp } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,7 @@ const ICONS: Record<string, typeof Activity> = {
   rates: Percent,
   sentiment: Activity,
   breadth: LayoutGrid,
+  market: TrendingUp,
 };
 
 /** 用 shadcn Sidebar 原语:collapsible="icon" 自带折叠成图标轨、Cmd/Ctrl+B
