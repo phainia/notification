@@ -73,6 +73,7 @@ def main():
             s[to_date(p["x"])] = p["y"]
         cols[col] = pd.Series(s)
     df = pd.DataFrame(cols)
+    df["fng"] = df["fng"].round(0)
     df["fng_rating"] = pd.Series(            # 档位只随主指数存一列
         {to_date(p["x"]): p.get("rating") for p in j["fear_and_greed_historical"]["data"]})
     df.index = pd.to_datetime(df.index)

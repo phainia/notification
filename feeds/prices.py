@@ -37,6 +37,7 @@ SKIP = {"FNG_long", "XAUUSD", "COPPER"}
 OHLCV = ["o", "h", "l", "c", "v"]
 PRICE_COLS = ["o", "h", "l", "c"]
 PRICE_NOISE_ABS = 1e-3
+PRICE_FLOAT_FORMAT = "%.4f"
 
 
 def discover() -> list[str]:
@@ -102,6 +103,10 @@ def same_frame(a: pd.DataFrame, b: pd.DataFrame) -> bool:
     return bool(np.array_equal(a[OHLCV].to_numpy(), b[OHLCV].to_numpy()))
 
 
+def write_prices(df: pd.DataFrame, path: str, *, mode: str = "w", header: bool = True) -> None:
+    df.to_csv(path, mode=mode, header=header, float_format=PRICE_FLOAT_FORMAT)
+
+
 def can_append_only(old: pd.DataFrame, stable: pd.DataFrame, material: int) -> pd.DataFrame:
     """Return strictly new trailing rows when old text can be preserved."""
     if material:
@@ -140,16 +145,17 @@ def refresh(ticker: str) -> bool:
         return False
     stable, kept, material = stabilize_overlap(old, new)
     if same_frame(stable, old):
+        write_prices(stable, path)
         print(f"  {ticker}: 无实质变化 {len(new)} rows {new.index[0].date()}..{new.index[-1].date()}"
               f"  (kept {kept} overlap rows)")
         return True
     append_rows = can_append_only(old, stable, material)
     if not append_rows.empty:
-        append_rows.to_csv(path, mode="a", header=False)
+        write_prices(append_rows, path, mode="a", header=False)
         print(f"  {ticker}: append {len(append_rows)} rows {append_rows.index[0].date()}..{append_rows.index[-1].date()}"
               f"  (was {old_n} rows ..{old_last.date()}, kept {kept} overlap rows)")
         return True
-    stable.to_csv(path)
+    write_prices(stable, path)
     print(f"  {ticker}: {len(stable)} rows {stable.index[0].date()}..{stable.index[-1].date()}"
           f"  (was {old_n} rows ..{old_last.date()}, kept {kept} overlap rows, material {material})")
     return True

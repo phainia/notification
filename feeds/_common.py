@@ -175,7 +175,7 @@ def save(df: pd.DataFrame, name: str, label: str = "") -> str:
     os.makedirs(MACRO_DIR, exist_ok=True)
     df = df.dropna(how="all").sort_index()
     path = os.path.join(MACRO_DIR, f"{name}.csv")
-    df.to_csv(path)
+    df.to_csv(path, float_format="%.6g")
     first, last, n = df.index.min(), df.index.max(), len(df)
     cov = " | ".join(f"{c}:{int(df[c].notna().sum())}" for c in df.columns)
     print(f"OK  {name:<20}{label:<16}{n:>6} rows  {first.date()}..{last.date()}")

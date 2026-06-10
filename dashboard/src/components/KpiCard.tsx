@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SeriesSpec } from "../charts/types";
+import { formatMetricValue, metricDigits, roundMetricValue } from "../lib/metricFormat";
 import { seriesData } from "../lib/seriesData";
 import { last } from "../lib/transform";
 
@@ -32,14 +33,13 @@ export function KpiCard({ spec, onClick }: { spec: KpiSpec; onClick?: () => void
     };
   }, [spec]);
 
-  const d = spec.digits ?? 2;
-  const delta = v && v.prev !== null ? v.value - v.prev : null;
-  const displayDelta = delta === null ? null : Number(delta.toFixed(d));
+  const d = metricDigits(spec);
+  const displayValue = v ? roundMetricValue(v.value, d) : null;
+  const displayPrev = v?.prev !== null && v?.prev !== undefined ? roundMetricValue(v.prev, d) : null;
+  const displayDelta = displayValue !== null && displayPrev !== null ? roundMetricValue(displayValue - displayPrev, d) : null;
   const hasDisplayDelta = displayDelta !== null && Math.abs(displayDelta) > 0;
-  const fmtValue = (x: number) =>
-    spec.compact
-      ? x.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: d })
-      : x.toFixed(d);
+  const fmtValue = (x: number) => formatMetricValue(x, spec, { includeUnit: false });
+  const fmtDelta = (x: number) => formatMetricValue(x, spec, { sign: true, includeUnit: false });
   const deltaCls =
     displayDelta === null
       ? "text-muted-foreground"
@@ -68,15 +68,14 @@ export function KpiCard({ spec, onClick }: { spec: KpiSpec; onClick?: () => void
           {err ? "—" : v ? fmtValue(v.value) : "…"}
           {spec.fmt === "pct" && !err && v ? <span className="text-sm">%</span> : null}
         </CardTitle>
-        {delta !== null && hasDisplayDelta && (
+        {hasDisplayDelta && (
           <CardAction className="max-w-[5.5rem] overflow-hidden">
             <Badge
               variant="outline"
               className={`num max-w-full overflow-hidden text-ellipsis whitespace-nowrap ${valueCls}`}
-              title={`上一期变化: ${delta >= 0 ? "+" : ""}${delta.toFixed(d)}`}
+              title={`上一期变化: ${fmtDelta(displayDelta)}`}
             >
-              {displayDelta >= 0 ? "+" : ""}
-              {fmtValue(displayDelta)}
+              {fmtDelta(displayDelta)}
             </Badge>
           </CardAction>
         )}

@@ -5,8 +5,9 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import type { ChartSpec } from "../charts/types";
+import type { ChartSpec, SeriesSpec } from "../charts/types";
 import { baseOption, echarts, INK2, PALETTE, yAxis } from "../charts/theme";
+import { formatMetricValue, type MetricFormatSpec } from "../lib/metricFormat";
 import { seriesData } from "../lib/seriesData";
 import { sourceLinksForSeries } from "../lib/sourceUrls";
 
@@ -21,6 +22,62 @@ const RANGES: { label: string; years: number | null }[] = [
  *  不同会错位)。同组任一图缩放 → 把它的 startValue/endValue 原样派发给其余图。 */
 const syncGroups = new Map<string, Set<echarts.ECharts>>();
 let syncing = false;
+
+type TooltipParam = {
+  axisValueLabel?: string;
+  marker?: string;
+  seriesIndex?: number;
+  seriesName?: string;
+  value?: unknown;
+};
+
+function axisFor(chart: ChartSpec, series: SeriesSpec) {
+  return series.axis === 1 ? chart.y1 : chart.y0;
+}
+
+function formatSpecForSeries(chart: ChartSpec, series: SeriesSpec): MetricFormatSpec {
+  return {
+    csv: series.csv,
+    col: series.col,
+    fmt: series.yoyMonths ? "pct" : axisFor(chart, series)?.fmt,
+    yoyMonths: series.yoyMonths,
+  };
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (ch) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch] ?? ch
+  ));
+}
+
+function tooltipValue(param: TooltipParam): number | null {
+  const raw = Array.isArray(param.value) ? param.value[1] : param.value;
+  const n = typeof raw === "number" ? raw : Number(raw);
+  return Number.isFinite(n) ? n : null;
+}
+
+function tooltipDate(param: TooltipParam | undefined): string {
+  if (!param) return "";
+  const raw = Array.isArray(param.value) ? param.value[0] : undefined;
+  if (typeof raw === "string") return raw.slice(0, 10);
+  return param.axisValueLabel ?? "";
+}
+
+function tooltipFormatter(params: unknown, spec: ChartSpec): string {
+  const items = (Array.isArray(params) ? params : [params]) as TooltipParam[];
+  const rows = items
+    .map((param) => {
+      const series = spec.series[param.seriesIndex ?? -1] ?? spec.series.find((s) => s.name === param.seriesName);
+      const value = tooltipValue(param);
+      if (!series || value === null) return "";
+      return `${param.marker ?? ""}${escapeHtml(param.seriesName ?? series.name)}: <span class="num">${formatMetricValue(
+        value,
+        formatSpecForSeries(spec, series)
+      )}</span>`;
+    })
+    .filter(Boolean);
+  return [escapeHtml(tooltipDate(items[0])), ...rows].filter(Boolean).join("<br/>");
+}
 
 function joinSync(group: string, chart: echarts.ECharts) {
   let set = syncGroups.get(group);
@@ -75,6 +132,7 @@ export function ChartCard({
         const data = await Promise.all(spec.series.map(seriesData));
         if (dead || !ref.current) return;
         const chart = echarts.init(ref.current);
+        const base = baseOption();
         chartRef.current = chart;
         if (syncGroup) joinSync(syncGroup, chart);
         // 用户拖拽 / 对比同步推来的缩放(非预设按钮)→ 清掉区间高亮(变 custom)
@@ -86,7 +144,11 @@ export function ChartCard({
         if (first.length) setLatest({ date: first[first.length - 1][0], value: first[first.length - 1][1] });
 
         const opt: Record<string, unknown> = {
-          ...baseOption(),
+          ...base,
+          tooltip: {
+            ...base.tooltip,
+            formatter: (params: unknown) => tooltipFormatter(params, spec),
+          },
           yAxis: [
             yAxis({ ...spec.y0, position: "left" }),
             ...(spec.y1 ? [yAxis({ ...spec.y1, position: "right" })] : []),
@@ -123,7 +185,7 @@ export function ChartCard({
                 : undefined,
           })),
           legend: {
-            ...(baseOption().legend as object),
+            ...base.legend,
             selected: Object.fromEntries(spec.series.filter((s) => s.off).map((s) => [s.name, false])),
           },
         };
@@ -164,9 +226,7 @@ export function ChartCard({
 
   const latestText = useMemo(() => {
     if (!latest) return "";
-    const v = latest.value;
-    const s = Math.abs(v) >= 1000 ? v.toLocaleString("en-US", { maximumFractionDigits: 0 }) : v.toFixed(2);
-    return `${s}${spec.y0?.fmt === "pct" ? "%" : ""}`;
+    return formatMetricValue(latest.value, formatSpecForSeries(spec, spec.series[0]));
   }, [latest, spec]);
 
   return (
