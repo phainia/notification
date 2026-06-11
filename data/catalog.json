@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-06-11T03:03:45Z",
+  "generated_at": "2026-06-11T06:16:23Z",
   "total": 64,
   "types": [
     "macro",
@@ -220,8 +220,8 @@
       ],
       "frequency": "daily",
       "history_from": "2020-09-21",
-      "updated_at": "2026-06-10",
-      "sample_count": 1436,
+      "updated_at": "2026-06-11",
+      "sample_count": 1437,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/fng.csv"
     },
     {
