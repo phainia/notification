@@ -8,6 +8,9 @@
 
 也会被 run_all.py 末尾调用,随每日数据刷新一起 commit。catalog.json 与 CSV 同样通过
 公开 GitHub raw 可读,无需任何后端。
+
+同时由同一份 metrics 生成 dashboard/public/llms.txt —— 站点根 /llms.txt 形式的数据接口
+索引(给 LLM/开发者看),Vite build 复制到 dist 根。随每日刷新自动更新,零手写。
 """
 import csv
 import json
@@ -17,9 +20,14 @@ from datetime import datetime, timezone
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.normpath(os.path.join(HERE, "..", "data"))
 RAW_BASE = "https://raw.githubusercontent.com/riverfjs/notification/main/data"
+# llms.txt 落到 dashboard 的 public/ —— Vite build 会复制到 dist 根，对外即 /llms.txt
+DASHBOARD_PUBLIC = os.path.normpath(os.path.join(HERE, "..", "dashboard", "public"))
 
 # 目录 → catalog 里的 type
 TYPES = {"macro": "macro", "tickers": "ticker", "spot": "spot"}
+
+# llms.txt 里按 type 分组的展示顺序与人类可读标题
+TYPE_SECTIONS = [("macro", "Macro"), ("ticker", "Tickers"), ("spot", "Spot")]
 
 # 核心指标的人类可读标题 + 描述(键为 "<dir>/<name>")。未列出的用文件名兜底,
 # tickers/spot 走程序化描述。新增指标无需在此登记(只是少了中文描述)。
@@ -92,6 +100,60 @@ def read_meta(path):
     return columns, dates[0], dates[-1], infer_frequency(dates), len(dates)
 
 
+def write_llms_txt(metrics, generated_at):
+    """从 catalog 的 metrics 生成站点根 llms.txt —— 给 LLM/开发者的数据接口索引。
+    写到 dashboard/public/，Vite build 复制到 dist 根，对外即 /llms.txt。"""
+    catalog_url = f"{RAW_BASE}/catalog.json"
+    lines = [
+        "# Notification — Market & Macro Data",
+        "",
+        f"> {len(metrics)} daily-refreshed macro / market time-series datasets, "
+        "published as public CSV files on GitHub raw. No backend, no auth, no rate "
+        "limits. Refreshed daily by an automated feeds pipeline.",
+        "",
+        "Each CSV's first column is `date` (ISO `YYYY-MM-DD`); the remaining columns "
+        "are listed per dataset below. Lines beginning with `#` are comments; empty "
+        "cells mean no value.",
+        "",
+        "## How to use (agents / LLMs)",
+        "",
+        f"1. Pick a dataset below, or read the machine-readable index at {catalog_url}.",
+        "2. Fetch its CSV from the data URL (raw GitHub, public).",
+        "3. Filter rows by the `date` column for your range; read the columns you need.",
+        "",
+    ]
+    by_type = {}
+    for m in metrics:
+        by_type.setdefault(m["type"], []).append(m)
+    for typ, heading in TYPE_SECTIONS:
+        items = by_type.get(typ, [])
+        if not items:
+            continue
+        lines.append(f"## {heading} ({len(items)})")
+        lines.append("")
+        for m in items:
+            cols = ", ".join(m["columns"])
+            note = (
+                f"{m['frequency']}, {m['history_from']}→{m['updated_at']}, "
+                f"{m['sample_count']} rows; id `{m['id']}`; cols: {cols}"
+            )
+            lines.append(f"- [{m['title']}]({m['data_url']}): {note}")
+        lines.append("")
+    lines += [
+        "---",
+        f"Machine-readable catalog: {catalog_url}",
+        f"Generated {generated_at} from {len(metrics)} datasets.",
+        "",
+    ]
+
+    os.makedirs(DASHBOARD_PUBLIC, exist_ok=True)
+    out = os.path.join(DASHBOARD_PUBLIC, "llms.txt")
+    with open(out, "w") as f:
+        f.write("\n".join(lines))
+    print(f"llms.txt: {len(metrics)} datasets -> {out}")
+    return out
+
+
 def build():
     metrics = []
     for sub, typ in TYPES.items():
@@ -140,6 +202,7 @@ def build():
     with open(out, "w") as f:
         json.dump(catalog, f, ensure_ascii=False, indent=2)
     print(f"catalog.json: {len(metrics)} metrics -> {out}")
+    write_llms_txt(metrics, catalog["generated_at"])
     return out
 
 
