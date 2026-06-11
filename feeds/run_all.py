@@ -43,6 +43,14 @@ def main():
             fail.append(name)
         time.sleep(1.0)
     print(f"\n=== 完成 {len(ok)}/{len(MODULES)} ===")
+
+    # 生成指标目录 catalog.json(扫描现有 data/,与数据一起 commit;部分 feed 失败也照样产出)
+    try:
+        import catalog
+        catalog.build()
+    except Exception as e:  # noqa: BLE001
+        print(f"XX  catalog 生成失败: {str(e)[:150]}", file=sys.stderr)
+
     if fail:
         print(f"失败: {fail}")
         sys.exit(1)                          # 非零退出:让 cron/GitHub Actions 能感知失败

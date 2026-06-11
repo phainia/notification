@@ -1,0 +1,1173 @@
+{
+  "version": 1,
+  "generated_at": "2026-06-11T02:36:28Z",
+  "total": 64,
+  "types": [
+    "macro",
+    "spot",
+    "ticker"
+  ],
+  "metrics": [
+    {
+      "id": "macro/aaii",
+      "type": "macro",
+      "title": "AAII 散户情绪",
+      "description": "散户多空中性比例调查",
+      "columns": [
+        "bullish",
+        "neutral",
+        "bearish",
+        "bull_bear_spread"
+      ],
+      "frequency": "weekly",
+      "history_from": "1987-07-24",
+      "updated_at": "2026-06-04",
+      "sample_count": 2026,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/aaii.csv"
+    },
+    {
+      "id": "macro/breadth",
+      "type": "macro",
+      "title": "市场宽度",
+      "description": "行业/大盘宽度指标",
+      "columns": [
+        "breadth20",
+        "breadth50",
+        "breadth200",
+        "regime_bull"
+      ],
+      "frequency": "daily",
+      "history_from": "1999-03-05",
+      "updated_at": "2026-06-09",
+      "sample_count": 6858,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/breadth.csv"
+    },
+    {
+      "id": "macro/breadth_official",
+      "type": "macro",
+      "title": "官方宽度",
+      "description": "官方 $S5xx 宽度系列",
+      "columns": [
+        "pct_above_ma20",
+        "pct_above_ma50",
+        "pct_above_ma200"
+      ],
+      "frequency": "daily",
+      "history_from": "2006-12-29",
+      "updated_at": "2026-06-08",
+      "sample_count": 4912,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/breadth_official.csv"
+    },
+    {
+      "id": "macro/breadth_stocks",
+      "type": "macro",
+      "title": "成分股宽度",
+      "description": "按时点成分自算的宽度",
+      "columns": [
+        "pct_above_ma20",
+        "n_ma20",
+        "pct_above_ma50",
+        "n_ma50",
+        "pct_above_ma200",
+        "n_ma200",
+        "n_members"
+      ],
+      "frequency": "daily",
+      "history_from": "2000-01-31",
+      "updated_at": "2026-06-08",
+      "sample_count": 6628,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/breadth_stocks.csv"
+    },
+    {
+      "id": "macro/claims_weekly",
+      "type": "macro",
+      "title": "每周初请失业金",
+      "description": "初次申请失业救济人数(周频)",
+      "columns": [
+        "initial_claims_weekly"
+      ],
+      "frequency": "weekly",
+      "history_from": "1967-01-07",
+      "updated_at": "2026-05-30",
+      "sample_count": 3100,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/claims_weekly.csv"
+    },
+    {
+      "id": "macro/copper_gold_ppi",
+      "type": "macro",
+      "title": "铜金比 vs PPI",
+      "description": "铜金比与生产者价格指数对照",
+      "columns": [
+        "copper_usd_mt",
+        "ppi_all_commod",
+        "gold_usd_oz",
+        "copper_gold_ratio",
+        "copper_fut_usd_mt",
+        "copper_gold_ratio_daily"
+      ],
+      "frequency": "daily",
+      "history_from": "1913-01-01",
+      "updated_at": "2026-06-05",
+      "sample_count": 7654,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/copper_gold_ppi.csv"
+    },
+    {
+      "id": "macro/cot_legacy",
+      "type": "macro",
+      "title": "COT legacy 口径",
+      "description": "CFTC legacy 口径持仓(1986+)",
+      "columns": [
+        "sp500_big_oi",
+        "sp500_big_noncomm_net",
+        "sp500_big_comm_net",
+        "sp500_big_cot_index_mm",
+        "sp500_emini_oi",
+        "sp500_emini_noncomm_net",
+        "sp500_emini_comm_net",
+        "sp500_emini_cot_index_mm",
+        "ndx_big_oi",
+        "ndx_big_noncomm_net",
+        "ndx_big_comm_net",
+        "ndx_big_cot_index_mm",
+        "ndx_mini_oi",
+        "ndx_mini_noncomm_net",
+        "ndx_mini_comm_net",
+        "ndx_mini_cot_index_mm"
+      ],
+      "frequency": "weekly",
+      "history_from": "1986-01-15",
+      "updated_at": "2026-06-02",
+      "sample_count": 1920,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/cot_legacy.csv"
+    },
+    {
+      "id": "macro/cot_nasdaq100",
+      "type": "macro",
+      "title": "COT 纳指100",
+      "description": "CFTC 持仓报告:Nasdaq100 期货各类持仓",
+      "columns": [
+        "open_interest",
+        "lev_money_net",
+        "lev_money_cot_index",
+        "asset_mgr_net",
+        "asset_mgr_cot_index",
+        "dealer_net",
+        "dealer_cot_index"
+      ],
+      "frequency": "weekly",
+      "history_from": "2006-06-13",
+      "updated_at": "2026-06-02",
+      "sample_count": 1043,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/cot_nasdaq100.csv"
+    },
+    {
+      "id": "macro/cot_sp500",
+      "type": "macro",
+      "title": "COT 标普500",
+      "description": "CFTC 持仓报告:S&P500 期货各类持仓",
+      "columns": [
+        "open_interest",
+        "lev_money_net",
+        "lev_money_cot_index",
+        "asset_mgr_net",
+        "asset_mgr_cot_index",
+        "dealer_net",
+        "dealer_cot_index"
+      ],
+      "frequency": "weekly",
+      "history_from": "2006-06-13",
+      "updated_at": "2026-06-02",
+      "sample_count": 1043,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/cot_sp500.csv"
+    },
+    {
+      "id": "macro/credit_spread",
+      "type": "macro",
+      "title": "信用利差",
+      "description": "投资级/高收益信用利差,反映信用风险与流动性压力",
+      "columns": [
+        "baa_10y_spread",
+        "aaa_10y_spread",
+        "vix",
+        "baa_aaa_quality",
+        "hy_oas_full",
+        "hyg_tlt_ratio",
+        "hy_stress"
+      ],
+      "frequency": "daily",
+      "history_from": "1983-01-03",
+      "updated_at": "2026-06-08",
+      "sample_count": 11212,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/credit_spread.csv"
+    },
+    {
+      "id": "macro/fng",
+      "type": "macro",
+      "title": "CNN 恐惧贪婪指数",
+      "description": "Fear & Greed 总分(0-100)及分量:动量、52周强弱、麦克莱伦宽度、5日期权PC、VIX、垃圾债利差、避险偏好;含 fng_rating 文字档位",
+      "columns": [
+        "fng",
+        "momentum_spx",
+        "momentum_spx_ma125",
+        "strength_52w",
+        "breadth_mcclellan",
+        "putcall_5d",
+        "vix",
+        "vix_ma50",
+        "junk_spread",
+        "safehaven_diff",
+        "fng_rating"
+      ],
+      "frequency": "daily",
+      "history_from": "2020-09-21",
+      "updated_at": "2026-06-09",
+      "sample_count": 1435,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/fng.csv"
+    },
+    {
+      "id": "macro/home_sales_prices",
+      "type": "macro",
+      "title": "房屋销售与价格",
+      "description": "成屋/新屋销售与房价",
+      "columns": [
+        "new_home_sales_k",
+        "case_shiller_natl",
+        "existing_home_sales_k"
+      ],
+      "frequency": "monthly",
+      "history_from": "1963-01-01",
+      "updated_at": "2026-04-01",
+      "sample_count": 760,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/home_sales_prices.csv"
+    },
+    {
+      "id": "macro/housing_supply",
+      "type": "macro",
+      "title": "住房供给",
+      "description": "住房库存/月供给量",
+      "columns": [
+        "building_permits_k",
+        "housing_starts_k",
+        "months_supply_new"
+      ],
+      "frequency": "monthly",
+      "history_from": "1959-01-01",
+      "updated_at": "2026-04-01",
+      "sample_count": 808,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/housing_supply.csv"
+    },
+    {
+      "id": "macro/hy_oas_mirror",
+      "type": "macro",
+      "title": "hy_oas_mirror",
+      "description": "",
+      "columns": [
+        "hy_oas"
+      ],
+      "frequency": "daily",
+      "history_from": "1996-12-31",
+      "updated_at": "2025-11-03",
+      "sample_count": 7530,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/hy_oas_mirror.csv"
+    },
+    {
+      "id": "macro/inflation_monetary",
+      "type": "macro",
+      "title": "货币与通胀",
+      "description": "货币供应/通胀相关货币侧指标",
+      "columns": [
+        "breakeven_5y",
+        "breakeven_10y",
+        "fwd_5y5y_infl",
+        "fed_funds_target"
+      ],
+      "frequency": "daily",
+      "history_from": "1982-09-27",
+      "updated_at": "2026-06-08",
+      "sample_count": 15961,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/inflation_monetary.csv"
+    },
+    {
+      "id": "macro/ism_pmi",
+      "type": "macro",
+      "title": "ISM PMI",
+      "description": "ISM 制造业/非制造业 PMI",
+      "columns": [
+        "ism_pmi"
+      ],
+      "frequency": "monthly",
+      "history_from": "1948-01-01",
+      "updated_at": "2026-05-01",
+      "sample_count": 941,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/ism_pmi.csv"
+    },
+    {
+      "id": "macro/jobs_monthly",
+      "type": "macro",
+      "title": "月度就业",
+      "description": "非农就业人数(千)、失业率(%)",
+      "columns": [
+        "nonfarm_payrolls_k",
+        "unemployment_rate_pct"
+      ],
+      "frequency": "monthly",
+      "history_from": "1948-01-01",
+      "updated_at": "2026-05-01",
+      "sample_count": 940,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/jobs_monthly.csv"
+    },
+    {
+      "id": "macro/mfg_orders_pmi",
+      "type": "macro",
+      "title": "制造业订单与PMI",
+      "description": "制造业新订单、PMI",
+      "columns": [
+        "durable_goods_orders",
+        "mfg_new_orders_total",
+        "philly_fed_mfg",
+        "ny_fed_mfg"
+      ],
+      "frequency": "monthly",
+      "history_from": "1968-05-01",
+      "updated_at": "2026-05-01",
+      "sample_count": 697,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/mfg_orders_pmi.csv"
+    },
+    {
+      "id": "macro/michigan_sentiment",
+      "type": "macro",
+      "title": "密歇根消费者信心",
+      "description": "密歇根大学消费者信心指数及通胀预期",
+      "columns": [
+        "sentiment",
+        "current_conditions",
+        "expectations",
+        "inflation_1y",
+        "inflation_5y"
+      ],
+      "frequency": "monthly",
+      "history_from": "2025-05-01",
+      "updated_at": "2026-05-01",
+      "sample_count": 13,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/michigan_sentiment.csv"
+    },
+    {
+      "id": "macro/naaim",
+      "type": "macro",
+      "title": "NAAIM 持仓敞口",
+      "description": "主动型基金经理股票敞口指数(情绪)",
+      "columns": [
+        "naaim_mean",
+        "most_bullish",
+        "most_bearish"
+      ],
+      "frequency": "weekly",
+      "history_from": "2006-07-05",
+      "updated_at": "2026-06-03",
+      "sample_count": 1039,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/naaim.csv"
+    },
+    {
+      "id": "macro/oil_gold_cpi",
+      "type": "macro",
+      "title": "油金比 vs CPI",
+      "description": "油金比与消费者价格指数对照",
+      "columns": [
+        "wti_usd_bbl",
+        "cpi_all_urban",
+        "gold_usd_oz",
+        "oil_gold_ratio"
+      ],
+      "frequency": "daily",
+      "history_from": "1947-01-01",
+      "updated_at": "2026-06-01",
+      "sample_count": 11151,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/oil_gold_cpi.csv"
+    },
+    {
+      "id": "macro/personal_finance",
+      "type": "macro",
+      "title": "个人收支",
+      "description": "个人收入、支出、储蓄率",
+      "columns": [
+        "personal_income",
+        "real_disposable_income",
+        "personal_saving_rate_pct"
+      ],
+      "frequency": "monthly",
+      "history_from": "1959-01-01",
+      "updated_at": "2026-04-01",
+      "sample_count": 808,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/personal_finance.csv"
+    },
+    {
+      "id": "macro/putcall",
+      "type": "macro",
+      "title": "期权 PC 比(历史)",
+      "description": "CBOE 期权 put/call 比(2003-2019 冻结口径,equity/index/total)",
+      "columns": [
+        "equity_pc",
+        "index_pc",
+        "total_pc",
+        "equity_pc_archive",
+        "index_pc_archive"
+      ],
+      "frequency": "daily",
+      "history_from": "2003-10-17",
+      "updated_at": "2019-10-04",
+      "sample_count": 4019,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/putcall.csv"
+    },
+    {
+      "id": "macro/putcall_cboe",
+      "type": "macro",
+      "title": "期权 PC 比(CBOE)",
+      "description": "CBOE 期权 put/call 比当前口径",
+      "columns": [
+        "total_pc",
+        "index_pc",
+        "etp_pc",
+        "equity_pc",
+        "call_volume",
+        "put_volume"
+      ],
+      "frequency": "daily",
+      "history_from": "2019-10-07",
+      "updated_at": "2026-06-09",
+      "sample_count": 1742,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/putcall_cboe.csv"
+    },
+    {
+      "id": "macro/rates",
+      "type": "macro",
+      "title": "市场利率与政策利率",
+      "description": "美债收益率(3m/2y/10y)、有效联邦基金利率、期限利差(10y-2y / 10y-3m,倒挂为衰退预警)",
+      "columns": [
+        "ust_3m",
+        "ust_2y",
+        "ust_10y",
+        "fed_funds_eff",
+        "curve_10y_2y",
+        "curve_10y_3m"
+      ],
+      "frequency": "daily",
+      "history_from": "1954-07-01",
+      "updated_at": "2026-06-08",
+      "sample_count": 26274,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/rates.csv"
+    },
+    {
+      "id": "macro/retail",
+      "type": "macro",
+      "title": "零售销售",
+      "description": "零售销售总额及核心",
+      "columns": [
+        "retail_food_services",
+        "retail_ex_autos"
+      ],
+      "frequency": "monthly",
+      "history_from": "1992-01-01",
+      "updated_at": "2026-04-01",
+      "sample_count": 412,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/retail.csv"
+    },
+    {
+      "id": "macro/sector_strength",
+      "type": "macro",
+      "title": "行业相对强度",
+      "description": "11 个 SPDR 行业 ETF(XL*)的 63 日相对强度与趋势线",
+      "columns": [
+        "XLB_rs63",
+        "XLC_rs63",
+        "XLE_rs63",
+        "XLF_rs63",
+        "XLI_rs63",
+        "XLK_rs63",
+        "XLP_rs63",
+        "XLRE_rs63",
+        "XLU_rs63",
+        "XLV_rs63",
+        "XLY_rs63",
+        "XLB_rs_line",
+        "XLC_rs_line",
+        "XLE_rs_line",
+        "XLF_rs_line",
+        "XLI_rs_line",
+        "XLK_rs_line",
+        "XLP_rs_line",
+        "XLRE_rs_line",
+        "XLU_rs_line",
+        "XLV_rs_line",
+        "XLY_rs_line"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/sector_strength.csv"
+    },
+    {
+      "id": "macro/us_growth_releases",
+      "type": "macro",
+      "title": "增长数据发布",
+      "description": "GDP 等增长相关官方发布",
+      "columns": [
+        "real_gdp_qoq_saar"
+      ],
+      "frequency": "quarterly",
+      "history_from": "1947-04-01",
+      "updated_at": "2026-01-01",
+      "sample_count": 316,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/us_growth_releases.csv"
+    },
+    {
+      "id": "macro/us_inflation_releases",
+      "type": "macro",
+      "title": "通胀数据发布",
+      "description": "CPI/PPI/PCE 总体与核心,及其环比(mom)/同比(yoy)",
+      "columns": [
+        "cpi_headline",
+        "cpi_headline_mom",
+        "cpi_headline_yoy",
+        "cpi_core",
+        "cpi_core_mom",
+        "cpi_core_yoy",
+        "ppi_headline",
+        "ppi_headline_mom",
+        "ppi_headline_yoy",
+        "ppi_core",
+        "ppi_core_mom",
+        "ppi_core_yoy",
+        "ppi_core_ex_food_energy_trade",
+        "ppi_core_ex_food_energy_trade_mom",
+        "ppi_core_ex_food_energy_trade_yoy",
+        "pce",
+        "pce_mom",
+        "pce_yoy",
+        "core_pce",
+        "core_pce_mom",
+        "core_pce_yoy"
+      ],
+      "frequency": "monthly",
+      "history_from": "1959-01-01",
+      "updated_at": "2026-04-01",
+      "sample_count": 808,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/us_inflation_releases.csv"
+    },
+    {
+      "id": "macro/us_trade_orders",
+      "type": "macro",
+      "title": "贸易与订单",
+      "description": "贸易差额、耐用品/工厂订单",
+      "columns": [
+        "trade_balance_goods_services",
+        "durable_ex_transport_orders",
+        "durable_ex_transport_orders_mom"
+      ],
+      "frequency": "monthly",
+      "history_from": "2016-01-01",
+      "updated_at": "2026-04-01",
+      "sample_count": 124,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/us_trade_orders.csv"
+    },
+    {
+      "id": "macro/vehicle_sales",
+      "type": "macro",
+      "title": "汽车销售",
+      "description": "轻型车销售年化",
+      "columns": [
+        "total_vehicle_sales_m",
+        "light_vehicle_sales_m",
+        "autos_m",
+        "light_trucks_m"
+      ],
+      "frequency": "monthly",
+      "history_from": "1976-01-01",
+      "updated_at": "2026-05-01",
+      "sample_count": 605,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/vehicle_sales.csv"
+    },
+    {
+      "id": "macro/wei",
+      "type": "macro",
+      "title": "周度经济指数",
+      "description": "WEI 高频经济活动指数(周频)",
+      "columns": [
+        "weekly_economic_index"
+      ],
+      "frequency": "weekly",
+      "history_from": "2008-01-05",
+      "updated_at": "2026-05-30",
+      "sample_count": 961,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/wei.csv"
+    },
+    {
+      "id": "spot/COPPER",
+      "type": "spot",
+      "title": "COPPER",
+      "description": "COPPER 现货收盘价",
+      "columns": [
+        "c"
+      ],
+      "frequency": "daily",
+      "history_from": "2000-08-30",
+      "updated_at": "2026-06-05",
+      "sample_count": 6490,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/spot/COPPER.csv"
+    },
+    {
+      "id": "spot/XAUUSD",
+      "type": "spot",
+      "title": "XAUUSD",
+      "description": "XAUUSD 现货收盘价",
+      "columns": [
+        "c"
+      ],
+      "frequency": "daily",
+      "history_from": "1968-01-02",
+      "updated_at": "2026-06-08",
+      "sample_count": 14766,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/spot/XAUUSD.csv"
+    },
+    {
+      "id": "tickers/DBC",
+      "type": "ticker",
+      "title": "DBC",
+      "description": "DBC 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2006-02-06",
+      "updated_at": "2026-06-09",
+      "sample_count": 5117,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/DBC.csv"
+    },
+    {
+      "id": "tickers/DIA",
+      "type": "ticker",
+      "title": "DIA",
+      "description": "DIA 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-01-20",
+      "updated_at": "2026-06-09",
+      "sample_count": 7141,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/DIA.csv"
+    },
+    {
+      "id": "tickers/EEM",
+      "type": "ticker",
+      "title": "EEM",
+      "description": "EEM 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2003-04-14",
+      "updated_at": "2026-06-09",
+      "sample_count": 5826,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/EEM.csv"
+    },
+    {
+      "id": "tickers/EFA",
+      "type": "ticker",
+      "title": "EFA",
+      "description": "EFA 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2001-08-27",
+      "updated_at": "2026-06-09",
+      "sample_count": 6232,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/EFA.csv"
+    },
+    {
+      "id": "tickers/GLD",
+      "type": "ticker",
+      "title": "GLD",
+      "description": "GLD 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2004-11-18",
+      "updated_at": "2026-06-09",
+      "sample_count": 5422,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/GLD.csv"
+    },
+    {
+      "id": "tickers/HYG",
+      "type": "ticker",
+      "title": "HYG",
+      "description": "HYG 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2007-04-11",
+      "updated_at": "2026-06-09",
+      "sample_count": 4822,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/HYG.csv"
+    },
+    {
+      "id": "tickers/IWM",
+      "type": "ticker",
+      "title": "IWM",
+      "description": "IWM 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2000-05-26",
+      "updated_at": "2026-06-09",
+      "sample_count": 6547,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/IWM.csv"
+    },
+    {
+      "id": "tickers/IWY",
+      "type": "ticker",
+      "title": "IWY",
+      "description": "IWY 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2009-09-28",
+      "updated_at": "2026-06-09",
+      "sample_count": 4200,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/IWY.csv"
+    },
+    {
+      "id": "tickers/MOAT",
+      "type": "ticker",
+      "title": "MOAT",
+      "description": "MOAT 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2012-04-25",
+      "updated_at": "2026-06-09",
+      "sample_count": 3551,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/MOAT.csv"
+    },
+    {
+      "id": "tickers/PFF",
+      "type": "ticker",
+      "title": "PFF",
+      "description": "PFF 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2007-03-30",
+      "updated_at": "2026-06-09",
+      "sample_count": 4829,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/PFF.csv"
+    },
+    {
+      "id": "tickers/QQQ",
+      "type": "ticker",
+      "title": "QQQ",
+      "description": "QQQ 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1999-03-10",
+      "updated_at": "2026-06-09",
+      "sample_count": 6855,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/QQQ.csv"
+    },
+    {
+      "id": "tickers/RSP",
+      "type": "ticker",
+      "title": "RSP",
+      "description": "RSP 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2003-05-01",
+      "updated_at": "2026-06-09",
+      "sample_count": 5814,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/RSP.csv"
+    },
+    {
+      "id": "tickers/SPMO",
+      "type": "ticker",
+      "title": "SPMO",
+      "description": "SPMO 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2015-10-12",
+      "updated_at": "2026-06-09",
+      "sample_count": 2680,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/SPMO.csv"
+    },
+    {
+      "id": "tickers/SPY",
+      "type": "ticker",
+      "title": "SPY",
+      "description": "SPY 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1993-01-29",
+      "updated_at": "2026-06-09",
+      "sample_count": 8397,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/SPY.csv"
+    },
+    {
+      "id": "tickers/TLT",
+      "type": "ticker",
+      "title": "TLT",
+      "description": "TLT 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2002-07-30",
+      "updated_at": "2026-06-09",
+      "sample_count": 6004,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/TLT.csv"
+    },
+    {
+      "id": "tickers/VIX",
+      "type": "ticker",
+      "title": "VIX",
+      "description": "VIX 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1990-01-02",
+      "updated_at": "2026-06-09",
+      "sample_count": 9177,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/VIX.csv"
+    },
+    {
+      "id": "tickers/VNQ",
+      "type": "ticker",
+      "title": "VNQ",
+      "description": "VNQ 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2004-09-29",
+      "updated_at": "2026-06-09",
+      "sample_count": 5458,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/VNQ.csv"
+    },
+    {
+      "id": "tickers/VUSTX",
+      "type": "ticker",
+      "title": "VUSTX",
+      "description": "VUSTX 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1986-05-19",
+      "updated_at": "2026-06-08",
+      "sample_count": 10091,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/VUSTX.csv"
+    },
+    {
+      "id": "tickers/VXO",
+      "type": "ticker",
+      "title": "VXO",
+      "description": "VXO 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1986-01-02",
+      "updated_at": "2021-09-23",
+      "sample_count": 8998,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/VXO.csv"
+    },
+    {
+      "id": "tickers/XLB",
+      "type": "ticker",
+      "title": "XLB",
+      "description": "XLB 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLB.csv"
+    },
+    {
+      "id": "tickers/XLC",
+      "type": "ticker",
+      "title": "XLC",
+      "description": "XLC 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2018-06-19",
+      "updated_at": "2026-06-09",
+      "sample_count": 2004,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLC.csv"
+    },
+    {
+      "id": "tickers/XLE",
+      "type": "ticker",
+      "title": "XLE",
+      "description": "XLE 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLE.csv"
+    },
+    {
+      "id": "tickers/XLF",
+      "type": "ticker",
+      "title": "XLF",
+      "description": "XLF 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLF.csv"
+    },
+    {
+      "id": "tickers/XLI",
+      "type": "ticker",
+      "title": "XLI",
+      "description": "XLI 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLI.csv"
+    },
+    {
+      "id": "tickers/XLK",
+      "type": "ticker",
+      "title": "XLK",
+      "description": "XLK 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLK.csv"
+    },
+    {
+      "id": "tickers/XLP",
+      "type": "ticker",
+      "title": "XLP",
+      "description": "XLP 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLP.csv"
+    },
+    {
+      "id": "tickers/XLRE",
+      "type": "ticker",
+      "title": "XLRE",
+      "description": "XLRE 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "2015-10-08",
+      "updated_at": "2026-06-09",
+      "sample_count": 2682,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLRE.csv"
+    },
+    {
+      "id": "tickers/XLU",
+      "type": "ticker",
+      "title": "XLU",
+      "description": "XLU 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLU.csv"
+    },
+    {
+      "id": "tickers/XLV",
+      "type": "ticker",
+      "title": "XLV",
+      "description": "XLV 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLV.csv"
+    },
+    {
+      "id": "tickers/XLY",
+      "type": "ticker",
+      "title": "XLY",
+      "description": "XLY 日线行情(OHLCV:开高低收量)",
+      "columns": [
+        "o",
+        "h",
+        "l",
+        "c",
+        "v"
+      ],
+      "frequency": "daily",
+      "history_from": "1998-12-22",
+      "updated_at": "2026-06-09",
+      "sample_count": 6907,
+      "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/XLY.csv"
+    }
+  ]
+}
