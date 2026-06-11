@@ -85,4 +85,4 @@ Each CSV's first column is `date` (ISO `YYYY-MM-DD`); the remaining columns are 
 
 ---
 Machine-readable catalog: https://raw.githubusercontent.com/riverfjs/notification/main/data/catalog.json
-Generated 2026-06-11T07:06:04Z from 64 datasets.
+Generated 2026-06-11T07:10:21Z from 64 datasets.
