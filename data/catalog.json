@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-06-19T05:30:57Z",
+  "generated_at": "2026-06-20T04:47:00Z",
   "total": 64,
   "types": [
     "macro",
@@ -38,8 +38,8 @@
       ],
       "frequency": "daily",
       "history_from": "1999-03-05",
-      "updated_at": "2026-06-17",
-      "sample_count": 6864,
+      "updated_at": "2026-06-18",
+      "sample_count": 6865,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/breadth.csv"
     },
     {
@@ -107,8 +107,8 @@
       ],
       "frequency": "daily",
       "history_from": "1913-01-01",
-      "updated_at": "2026-06-18",
-      "sample_count": 7663,
+      "updated_at": "2026-06-19",
+      "sample_count": 7664,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/copper_gold_ppi.csv"
     },
     {
@@ -196,8 +196,8 @@
       ],
       "frequency": "daily",
       "history_from": "1983-01-03",
-      "updated_at": "2026-06-17",
-      "sample_count": 11219,
+      "updated_at": "2026-06-18",
+      "sample_count": 11220,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/credit_spread.csv"
     },
     {
@@ -283,8 +283,8 @@
       ],
       "frequency": "daily",
       "history_from": "1982-09-27",
-      "updated_at": "2026-06-18",
-      "sample_count": 15971,
+      "updated_at": "2026-06-19",
+      "sample_count": 15972,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/inflation_monetary.csv"
     },
     {
@@ -502,8 +502,8 @@
       ],
       "frequency": "daily",
       "history_from": "1998-12-22",
-      "updated_at": "2026-06-17",
-      "sample_count": 6913,
+      "updated_at": "2026-06-18",
+      "sample_count": 6914,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/sector_strength.csv"
     },
     {
@@ -611,8 +611,8 @@
       ],
       "frequency": "daily",
       "history_from": "2000-08-30",
-      "updated_at": "2026-06-18",
-      "sample_count": 6499,
+      "updated_at": "2026-06-19",
+      "sample_count": 6500,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/spot/COPPER.csv"
     },
     {
@@ -625,8 +625,8 @@
       ],
       "frequency": "daily",
       "history_from": "1968-01-02",
-      "updated_at": "2026-06-18",
-      "sample_count": 14774,
+      "updated_at": "2026-06-19",
+      "sample_count": 14775,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/spot/XAUUSD.csv"
     },
     {
@@ -913,8 +913,8 @@
       ],
       "frequency": "daily",
       "history_from": "1990-01-02",
-      "updated_at": "2026-06-17",
-      "sample_count": 9183,
+      "updated_at": "2026-06-19",
+      "sample_count": 9184,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/VIX.csv"
     },
     {

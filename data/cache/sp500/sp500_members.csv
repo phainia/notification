@@ -111,7 +111,6 @@ COP,ConocoPhillips,Energy,Oil & Gas Exploration & Production,"Houston, Texas",19
 COR,Cencora,Health Care,Health Care Distributors,"Conshohocken, Pennsylvania",2001-08-30,1140859,1985,COR
 COST,Costco,Consumer Staples,Consumer Staples Merchandise Retail,"Issaquah, Washington",1993-10-01,909832,1976,COST
 CPAY,Corpay,Financials,Transaction & Payment Processing Services,"Atlanta, Georgia",2018-06-20,1175454,2000,CPAY
-CPB,Campbell's Company (The),Consumer Staples,Packaged Foods & Meats,"Camden, New Jersey",1957-03-04,16732,1869,CPB
 CPRT,Copart,Industrials,Diversified Support Services,"Dallas, Texas",2018-07-02,900075,1982,CPRT
 CPT,Camden Property Trust,Real Estate,Multi-Family Residential REITs,"Houston, Texas",2022-04-04,906345,1981,CPT
 CRH,CRH plc,Materials,Construction Materials,"Dublin, Ireland",2025-12-22,849395,1970,CRH
@@ -193,6 +192,7 @@ FIS,Fidelity National Information Services,Financials,Transaction & Payment Proc
 FISV,Fiserv,Financials,Transaction & Payment Processing Services,"Brookfield, Wisconsin",2001-04-02,798354,1984,FISV
 FITB,Fifth Third Bancorp,Financials,Regional Banks,"Cincinnati, Ohio",1996-03-29,35527,1858,FITB
 FIX,Comfort Systems USA,Industrials,Construction & Engineering,"Houston, Texas",2025-12-22,1035983,1997,FIX
+FLEX,Flex Ltd.,Information Technology,Electronic Manufacturing Services,"Austin, Texas",2026-06-22,866374,1969,FLEX
 FOX,Fox Corporation (Class B),Communication Services,Broadcasting,"New York City, New York",2019-03-19,1754301,2019,FOX
 FOXA,Fox Corporation (Class A),Communication Services,Broadcasting,"New York City, New York",2019-03-19,1754301,2019,FOXA
 FRT,Federal Realty Investment Trust,Real Estate,Retail REITs,"Rockville, Maryland",2016-02-01,34903,1962,FRT
@@ -316,6 +316,7 @@ MPWR,Monolithic Power Systems,Information Technology,Semiconductors,"Kirkland, W
 MRK,Merck & Co.,Health Care,Pharmaceuticals,"Kenilworth, New Jersey",1957-03-04,310158,1891,MRK
 MRNA,Moderna,Health Care,Biotechnology,"Cambridge, Massachusetts",2021-07-21,1682852,2010,MRNA
 MRSH,Marsh McLennan,Financials,Insurance Brokers,"New York City, New York",1987-08-31,62709,1905,MRSH
+MRVL,Marvell Technology,Information Technology,Semiconductors,"Santa Clara, California",2026-06-22,1835632,1995,MRVL
 MS,Morgan Stanley,Financials,Investment Banking & Brokerage,"New York City, New York",1993-07-29,895421,1935,MS
 MSCI,MSCI Inc.,Financials,Financial Exchanges & Data,"New York City, New York",2018-04-04,1408198,1969,MSCI
 MSFT,Microsoft,Information Technology,Systems Software,"Redmond, Washington",1994-06-01,789019,1975,MSFT
@@ -372,7 +373,6 @@ PNC,PNC Financial Services,Financials,Diversified Banks,"Pittsburgh, Pennsylvani
 PNR,Pentair,Industrials,Industrial Machinery & Supplies & Components,"Worsley, United Kingdom",2012-10-01,77360,1966,PNR
 PNW,Pinnacle West Capital,Utilities,Multi-Utilities,"Phoenix, Arizona",1999-10-04,764622,1985,PNW
 PODD,Insulet Corporation,Health Care,Health Care Equipment,"Acton, Massachusetts",2023-03-15,1145197,2000,PODD
-POOL,Pool Corporation,Consumer Discretionary,Distributors,"Covington, Louisiana",2020-10-07,945841,1993,POOL
 PPG,PPG Industries,Materials,Specialty Chemicals,"Pittsburgh, Pennsylvania",1957-03-04,79879,1883,PPG
 PPL,PPL Corporation,Utilities,Electric Utilities,"Allentown, Pennsylvania",2001-10-01,922224,1920,PPL
 PRU,Prudential Financial,Financials,Life & Health Insurance,"Newark, New Jersey",2002-07-22,1137774,1875,PRU
