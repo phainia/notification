@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-06-20T04:47:00Z",
+  "generated_at": "2026-06-21T05:23:30Z",
   "total": 64,
   "types": [
     "macro",
@@ -283,8 +283,8 @@
       ],
       "frequency": "daily",
       "history_from": "1982-09-27",
-      "updated_at": "2026-06-19",
-      "sample_count": 15972,
+      "updated_at": "2026-06-20",
+      "sample_count": 15973,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/inflation_monetary.csv"
     },
     {
@@ -363,8 +363,8 @@
       ],
       "frequency": "weekly",
       "history_from": "2006-07-05",
-      "updated_at": "2026-06-10",
-      "sample_count": 1040,
+      "updated_at": "2026-06-17",
+      "sample_count": 1041,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/naaim.csv"
     },
     {
@@ -949,8 +949,8 @@
       ],
       "frequency": "daily",
       "history_from": "1986-05-19",
-      "updated_at": "2026-06-17",
-      "sample_count": 10098,
+      "updated_at": "2026-06-18",
+      "sample_count": 10099,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/tickers/VUSTX.csv"
     },
     {
