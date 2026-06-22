@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-06-21T05:23:30Z",
+  "generated_at": "2026-06-22T05:36:29Z",
   "total": 64,
   "types": [
     "macro",
@@ -283,8 +283,8 @@
       ],
       "frequency": "daily",
       "history_from": "1982-09-27",
-      "updated_at": "2026-06-20",
-      "sample_count": 15973,
+      "updated_at": "2026-06-21",
+      "sample_count": 15974,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/inflation_monetary.csv"
     },
     {
@@ -433,8 +433,8 @@
       ],
       "frequency": "daily",
       "history_from": "2019-10-07",
-      "updated_at": "2026-06-19",
-      "sample_count": 1750,
+      "updated_at": "2026-06-22",
+      "sample_count": 1751,
       "data_url": "https://raw.githubusercontent.com/riverfjs/notification/main/data/macro/putcall_cboe.csv"
     },
     {
